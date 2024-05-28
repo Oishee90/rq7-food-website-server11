@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5001;
@@ -43,8 +43,19 @@ async function run() {
         res.send(result)
         // Here you can add your logic to save the new food item to the database
       });
-
- 
+      app.get('/addFoods/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { 'donator.email': email };
+        const result = await foodsCollection.find(query).toArray();
+        res.send(result);
+    });
+    app.delete('/addFood/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await foodsCollection.deleteOne(query);
+        res.send(result);
+    });
+    
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
