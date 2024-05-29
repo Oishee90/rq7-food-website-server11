@@ -36,6 +36,13 @@ async function run() {
         res.send(result)
         
     })
+    app.get("/addfood/:id",async(req,res)=>{
+        const id = req.params.id
+        const query = {_id: new ObjectId (id) }
+        const result = await foodsCollection.findOne(query)
+        res.send(result)
+
+    })
     app.post("/addFood", async (req, res) => {
         const newFood = req.body;
         console.log(newFood);
@@ -43,6 +50,8 @@ async function run() {
         res.send(result)
         // Here you can add your logic to save the new food item to the database
       });
+     
+    
       app.get('/addFoods/:email', async (req, res) => {
         const email = req.params.email;
         const query = { 'donator.email': email };
@@ -55,6 +64,20 @@ async function run() {
         const result = await foodsCollection.deleteOne(query);
         res.send(result);
     });
+    app.put('/addFood/:id', async (req, res) => {
+        const id = req.params.id;
+       const foodData = req.body
+       const query = { _id: new ObjectId(id) }
+       const options = {upsert: true}
+       const updateDoc = {
+        $set:{
+            ...foodData,
+        }
+       }
+       const result = await foodsCollection.updateOne(query, updateDoc, options)
+       res.send(result);
+    });
+    
     
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
