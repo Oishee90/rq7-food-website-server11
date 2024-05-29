@@ -29,6 +29,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const foodsCollection = client.db('foodDB').collection('food');
+    const reqCollection = client.db('foodDB').collection('requiest');
     // console.log(foodCollection)
     app.get("/addFood", async(req,res) => {
         const cursor = foodsCollection.find();
@@ -51,7 +52,13 @@ async function run() {
         // Here you can add your logic to save the new food item to the database
       });
      
-    
+    app.post("/requiest", async (req,res)=>{
+        const reqData =req.body
+      
+        const result = await reqCollection.insertOne(reqData)
+        res.send(result)
+    })
+
       app.get('/addFoods/:email', async (req, res) => {
         const email = req.params.email;
         const query = { 'donator.email': email };
@@ -77,7 +84,13 @@ async function run() {
        const result = await foodsCollection.updateOne(query, updateDoc, options)
        res.send(result);
     });
-    
+    // get all req
+    app.get('/requiest/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { 'user_email': email };
+        const result = await reqCollection.find(query).toArray();
+        res.send(result);
+    });
     
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
