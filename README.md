@@ -10,10 +10,10 @@ This is the server-side application for FoodShareHub, a Community Food Sharing a
 4. **CORS**: Configured to allow cross-origin requests.
 5. **Deployment**: Deployed on Vercel for easy access and scalability.
 
-## Packages Used
+## Technologies Used
 
 - `express`
-- `mongoose`
+- `MongoDB Atlas`
 - `dotenv`
 - `cors`
 `
@@ -36,10 +36,16 @@ This is the server-side application for FoodShareHub, a Community Food Sharing a
     - Create a `.env` file in the root directory.
     - Add your MongoDB connection string and other necessary environment variables to the `.env` file.
 
+## Live Demo
+
+Check out the live demo of FoodShareHub [here](https://foodking-website.web.app).
+
+---
 ## Environment Variables
 
 Make sure to set the following environment variables in your `.env` file:
 
 ```plaintext
 PORT=5001
+
 
