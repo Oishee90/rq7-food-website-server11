@@ -65,6 +65,15 @@ async function run() {
         const result = await foodsCollection.find(query).toArray();
         res.send(result);
     });
+    app.get("/food",async(req,res)=>{
+       const search = req.query.search
+       let query = {
+        foodName: { $regex: search, $options: 'i'}
+       }
+        const result = await foodsCollection
+        .find(query).toArray()
+        res.send(result)
+    })
     app.delete('/addFood/:id', async (req, res) => {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
