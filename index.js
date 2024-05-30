@@ -6,7 +6,16 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 // middleware
-app.use(cors());
+app.use(
+    cors({
+      origin: [
+        "http://localhost:5184",
+        "https://foodking-website.web.app",
+        "https://foodking-website.firebaseapp.com",
+      ],
+      credentials: true,
+    })
+  );
 app.use(express.json());
 
 // 4P2raWOBDeu7LrUD
@@ -27,7 +36,7 @@ async function run() {
   try {
   
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const foodsCollection = client.db('foodDB').collection('food');
     const reqCollection = client.db('foodDB').collection('requiest');
     // console.log(foodCollection)
